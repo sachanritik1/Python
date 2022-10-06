@@ -33,44 +33,45 @@ def linear_search(sequence: list, target: int) -> int:
     return -1
 
 
-def rec_linear_search(sequence: list, low: int, high: int, target: int) -> int:
+def rec_linear_search(sequence: list, index: int,target: int) -> int:
     """
     A pure Python implementation of a recursive linear search algorithm
 
     :param sequence: a collection with comparable items (as sorted items not required
         in Linear Search)
-    :param low: Lower bound of the array
-    :param high: Higher bound of the array
+    :param index: index of the given list element on which we are currently seaching
+        initially it will always be equal to the index of last element of the array
     :param target: The element to be found
-    :return: Index of the key or -1 if key not found
+    :return: Index of the key if found or -1 if key not found
 
     Examples:
-    >>> rec_linear_search([0, 30, 500, 100, 700], 0, 4, 0)
+    >>> rec_linear_search([0, 30, 500, 100, 700], 5, 0)
     0
-    >>> rec_linear_search([0, 30, 500, 100, 700], 0, 4, 700)
+    >>> rec_linear_search([0, 30, 500, 100, 700], 5, 700)
     4
-    >>> rec_linear_search([0, 30, 500, 100, 700], 0, 4, 30)
+    >>> rec_linear_search([0, 30, 500, 100, 700], 5, 30)
     1
-    >>> rec_linear_search([0, 30, 500, 100, 700], 0, 4, -6)
+    >>> rec_linear_search([0, 30, 500, 100, 700], 5, -6)
     -1
     """
-    if not (0 <= high < len(sequence) and 0 <= low < len(sequence)):
-        raise Exception("Invalid upper or lower bound!")
-    if high < low:
+   def rec_linear_search(sequence,index,target):
+    if index<0:
+        raise Exception("Invalid size bound!")
+    if index==0 and sequence[index]!=target:
         return -1
-    if sequence[low] == target:
-        return low
-    if sequence[high] == target:
-        return high
-    return rec_linear_search(sequence, low + 1, high - 1, target)
-
+    if index>=0 and sequence[index]==target:
+        return index
+    rec_linear_search(sequence,index-1, target)
+    return -1
 
 if __name__ == "__main__":
     user_input = input("Enter numbers separated by comma:\n").strip()
     sequence = [int(item.strip()) for item in user_input.split(",")]
 
     target = int(input("Enter a single number to be found in the list:\n").strip())
-    result = linear_search(sequence, target)
+    size=len(sequence)
+    result = linear_search(sequence, target) 
+    #result = rec_linear_search(sequence,size-1,target)
     if result != -1:
         print(f"linear_search({sequence}, {target}) = {result}")
     else:
